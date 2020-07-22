@@ -208,7 +208,7 @@ TritonModel::Create(
         // We don't want the backend used by this model to unload
         // while exec_fn is running (can happen if model is unloaded
         // during the request and then that request is released in
-        // exec_fn as the last reference to the model. So we hold a
+        // exec_fn as the last reference to the model). So we hold a
         // copy of the backend here... This convoluted flow will be
         // cleaned up once legacy InferenceBackend is replaced with
         // TritonModel.
@@ -217,7 +217,8 @@ TritonModel::Create(
         // If there is an error then we retain ownership of 'requests'
         // and must send error responses.
         TRITONSERVER_Error* err = model_exec_fn(
-            triton_model, &triton_requests[0], triton_requests.size());
+            triton_model, &triton_requests[0], triton_requests.size(),
+            nullptr /* instance_desc */);
         if (err != nullptr) {
           Status status = Status(
               TritonCodeToStatusCode(TRITONSERVER_ErrorCode(err)),

@@ -933,7 +933,8 @@ TRITONBACKEND_ModelFinalize(TRITONBACKEND_Model* model)
 TRITONSERVER_Error*
 TRITONBACKEND_ModelExecute(
     TRITONBACKEND_Model* model, TRITONBACKEND_Request** requests,
-    const uint32_t request_count)
+    const uint32_t request_count,
+    TRITONBACKEND_InstanceDescriptor* instance_desc)
 {
   // Triton only calls model execute from a single thread at a time
   // *for a given model*. But since this backend could be used by

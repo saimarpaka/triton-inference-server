@@ -48,6 +48,7 @@ struct TRITONBACKEND_ResponseFactory;
 struct TRITONBACKEND_Response;
 struct TRITONBACKEND_Backend;
 struct TRITONBACKEND_Model;
+struct TRITONBACKEND_InstanceDescriptor;
 
 // Version of this TRITONBACKEND API.
 #define TRITONBACKEND_API_VERSION 1
@@ -694,10 +695,14 @@ TRITONBACKEND_EXPORT TRITONSERVER_Error* TRITONBACKEND_ModelFinalize(
 /// \param model The model.
 /// \param requests The requests.
 /// \param request_count The number of requests in the batch.
+/// \param instance_desc The instance of the model where the execution
+/// should be performed, or nullptr if the backend is free to choose
+/// any instance to execute.
 /// \return a TRITONSERVER_Error indicating success or failure.
 TRITONBACKEND_EXPORT TRITONSERVER_Error* TRITONBACKEND_ModelExecute(
     TRITONBACKEND_Model* model, TRITONBACKEND_Request** requests,
-    const uint32_t request_count);
+    const uint32_t request_count,
+    TRITONBACKEND_InstanceDescriptor* instance_desc);
 
 
 #ifdef __cplusplus

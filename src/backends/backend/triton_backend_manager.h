@@ -47,7 +47,8 @@ class TritonBackend {
       TRITONBACKEND_Model* model);
   typedef TRITONSERVER_Error* (*TritonModelExecFn_t)(
       TRITONBACKEND_Model* model, TRITONBACKEND_Request** requests,
-      const uint32_t request_cnt);
+      const uint32_t request_cnt,
+      TRITONBACKEND_InstanceDescriptor* instance_desc);
 
   static Status Create(
       const std::string& name, const std::string& path,

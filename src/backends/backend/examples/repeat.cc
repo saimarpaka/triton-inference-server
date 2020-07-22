@@ -623,8 +623,12 @@ TRITONBACKEND_ModelFinalize(TRITONBACKEND_Model* model)
 TRITONSERVER_Error*
 TRITONBACKEND_ModelExecute(
     TRITONBACKEND_Model* model, TRITONBACKEND_Request** requests,
-    const uint32_t request_count)
+    const uint32_t request_count,
+    TRITONBACKEND_InstanceDescriptor* instance_desc)
 {
+  // We ignore 'instance_desc' because we only use a single
+  // instance... and we warn about this when initializing.
+
   const char* model_name;
   RETURN_IF_ERROR(TRITONBACKEND_ModelName(model, &model_name));
 
